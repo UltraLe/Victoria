@@ -4,13 +4,13 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.IOException;
-import java.net.SocketAddress;
 
 public class ServerTest implements Runnable{
 
-    protected ServerSocket serverSocket = null;
-    protected boolean      isStopped    = false;
-    protected Thread       runningThread= null;
+    private ServerSocket serverSocket = null;
+    private boolean isStopped = false;
+
+    public static String materiaPlusJson = null;
 
     private static int          PORT   = 8080;
     private static final int BACKLOG = 1;
@@ -21,12 +21,17 @@ public class ServerTest implements Runnable{
     }
 
     public void run(){
-        synchronized(this){
-            this.runningThread = Thread.currentThread();
-        }
+
         openServerSocket();
+
+        //finche' qualcuno decide di chiudere il main server, acetto nuove connessioni
         while(! isStopped()){
+
+            //quanto viene accettata una nuova connessione, resetta la socket di ascolto,
+            //sara' compito del thread gestire la connessione con l'ultimo client
+            //che ha richiesto la connessione
             Socket clientSocket = null;
+
             try {
                 clientSocket = this.serverSocket.accept();
             } catch (IOException e) {
@@ -37,12 +42,17 @@ public class ServerTest implements Runnable{
                 throw new RuntimeException(
                         "Error accepting client connection", e);
             }
-            new Thread(
-                    new SlaveThreadServer(
-                            clientSocket, "Multithreaded Server")
-            ).start();
+
+            //appena ho una richiesta di connessione, dopo averla accettata, verra' gestita
+            //da un altro thread (SlaveThreadServer)
+            SlaveThreadServer slaveThreadServer = new SlaveThreadServer(clientSocket);
+
+            Thread masterServer = new Thread(slaveThreadServer);
+
+            masterServer.start();
+
         }
-        System.out.println("Server Stopped.") ;
+        System.out.println("Master Server Stopped.") ;
     }
 
 
@@ -55,14 +65,16 @@ public class ServerTest implements Runnable{
         try {
             this.serverSocket.close();
         } catch (IOException e) {
-            throw new RuntimeException("Error closing server", e);
+            throw new RuntimeException("Error closing master server", e);
         }
     }
 
     private void openServerSocket() {
         try {
+
             InetAddress addr = InetAddress.getByName(ServerTest.SERVER_ADDRESS);
             this.serverSocket = new ServerSocket(ServerTest.PORT, ServerTest.BACKLOG, addr);
+
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Cannot open port "+ServerTest.PORT, e);
@@ -71,19 +83,12 @@ public class ServerTest implements Runnable{
 
     public static void main(String[] args)
     {
-        ServerTest server = new ServerTest(12345);
+        ServerTest server = new ServerTest(1025);
         new Thread(server).start();
 
-        /*
-        try {
-            Thread.sleep(20 * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Stopping Server");
-        server.stop();
-        */
-
+        MateriaPlusUpdater materiaUpdater = new MateriaPlusUpdater();
+        Thread timer = new Thread(materiaUpdater);
+        timer.start();
     }
 
 }

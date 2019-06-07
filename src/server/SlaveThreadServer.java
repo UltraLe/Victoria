@@ -5,38 +5,34 @@ import java.net.Socket;
 
 public class SlaveThreadServer implements Runnable {
 
-    protected Socket clientSocket = null;
-    protected String serverText   = null;
+    private Socket clientSocket = null;
 
-    public SlaveThreadServer(Socket clientSocket, String serverText){
+    public SlaveThreadServer(Socket clientSocket){
         this.clientSocket = clientSocket;
-        this.serverText = serverText;
     }
 
     @Override
     public void run() {
 
         OutputStream outputSocket;
-        InputStream inputStream;
-        String lineRead;
+        BufferedWriter buff;
 
         //InputStream non verrà usato, non voglio ricevere nulla dai client
         try {
+            outputSocket = clientSocket.getOutputStream();
+            buff = new BufferedWriter( new OutputStreamWriter(outputSocket));
 
-            while(true) {
-                outputSocket = clientSocket.getOutputStream();
-                inputStream = clientSocket.getInputStream();
 
-                lineRead = new BufferedReader(new InputStreamReader(inputStream)).readLine();
-                if(lineRead.equals("stop"))
-                    break;
+            //TODO
+            //la classe materia plus deve avere tutti gli attributi vecchi in più il timer,
+            //ovvero tempo rimanente per catturare tale voto
 
-                outputSocket.write(("HTTP/1.1 404 not found\n\nThreadSlave: " + "Did you say "+lineRead+"?\n"+
-                        this.serverText+ " Colpa di Giovanni\n").getBytes());
+            //TODO
+            //MateriaPlus materiaRitornataDaGiovanni = funzioneDiGiova();
+            //buff.write(materiaplusToJson(materiaRitornataDaGiovanni);
 
-            }
-            System.out.println("Thread n." + Thread.currentThread().getName() + " has finished");
             outputSocket.close();
+
         }catch (IOException e){
             e.printStackTrace();
         }
