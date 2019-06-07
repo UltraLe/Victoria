@@ -22,16 +22,20 @@ public class SlaveThreadServer implements Runnable {
             outputSocket = clientSocket.getOutputStream();
             buff = new BufferedWriter( new OutputStreamWriter(outputSocket));
 
+            //read lock, in tal modo il writer non potrebbe aggiornare
+            //mentre uno degli slave sta leggendo
+            MasterServer.readWriteLock.readLock().lock();
 
-            //TODO
-            //la classe materia plus deve avere tutti gli attributi vecchi in più il timer,
-            //ovvero tempo rimanente per catturare tale voto
+            //TODO manipolare la stringa Json in modo da aggiungere il tempo in cui il client
+            //TODO ... ha richiesto il voto, sara' suo compito calcolare il tempo rimanante,
+            //TODO ... fatto per alleggerire il carico di lavoro sul server
 
-            //TODO
-            //MateriaPlus materiaRitornataDaGiovanni = funzioneDiGiova();
-            //buff.write(materiaplusToJson(materiaRitornataDaGiovanni);
+            buff.write(MasterServer.materiaPlusJson);
 
-            outputSocket.close();
+            //read unlock
+            MasterServer.readWriteLock.readLock().unlock();
+
+            buff.close();
 
         }catch (IOException e){
             e.printStackTrace();

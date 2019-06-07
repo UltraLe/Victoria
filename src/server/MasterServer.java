@@ -4,19 +4,26 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.IOException;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class ServerTest implements Runnable{
+public class MasterServer implements Runnable{
 
     private ServerSocket serverSocket = null;
     private boolean isStopped = false;
 
     public static String materiaPlusJson = null;
 
+    //TODO campo che non serve, sara' compito dell'updater calcolarlo ed inserislo in materiaPlusJson
+    public static String emissionTime;
+
+    public static ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+
     private static int          PORT   = 8080;
     private static final int BACKLOG = 1;
     private static final String SERVER_ADDRESS = "0.0.0.0";
 
-    public ServerTest(int port){
+    public MasterServer(int port){
         PORT = port;
     }
 
@@ -72,18 +79,18 @@ public class ServerTest implements Runnable{
     private void openServerSocket() {
         try {
 
-            InetAddress addr = InetAddress.getByName(ServerTest.SERVER_ADDRESS);
-            this.serverSocket = new ServerSocket(ServerTest.PORT, ServerTest.BACKLOG, addr);
+            InetAddress addr = InetAddress.getByName(MasterServer.SERVER_ADDRESS);
+            this.serverSocket = new ServerSocket(MasterServer.PORT, MasterServer.BACKLOG, addr);
 
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Cannot open port "+ServerTest.PORT, e);
+            throw new RuntimeException("Cannot open port "+ MasterServer.PORT, e);
         }
     }
 
     public static void main(String[] args)
     {
-        ServerTest server = new ServerTest(1025);
+        MasterServer server = new MasterServer(1025);
         new Thread(server).start();
 
         MateriaPlusUpdater materiaUpdater = new MateriaPlusUpdater();

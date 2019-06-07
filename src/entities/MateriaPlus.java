@@ -6,15 +6,13 @@ public class MateriaPlus {
     private int credits;
     private int mark;
     private int rarity;
-    private int timeLeft;
 
-    public MateriaPlus(String subject, int credits, int mark, int rarity, int timeLeft){
+    public MateriaPlus(String subject, int credits, int mark, int rarity){
 
         this.credits = credits;
         this.mark = mark;
         this.rarity = rarity;
         this.subject = subject;
-        this.timeLeft = timeLeft;
     }
 
     public void setMark(int mark){
@@ -33,10 +31,6 @@ public class MateriaPlus {
         this.rarity = rarity;
     }
 
-    public void setTimeLeft(int timeLeft) {
-        this.timeLeft = timeLeft;
-    }
-
     public String getSubject() {
         return subject;
     }
@@ -53,7 +47,4 @@ public class MateriaPlus {
         return rarity;
     }
 
-    public int getTimeLeft() {
-        return timeLeft;
-    }
 }
