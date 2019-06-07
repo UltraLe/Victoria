@@ -1,18 +1,23 @@
 package server;
 
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.IOException;
+import java.net.SocketAddress;
 
 public class ServerTest implements Runnable{
 
-    protected int          serverPort   = 8080;
     protected ServerSocket serverSocket = null;
     protected boolean      isStopped    = false;
     protected Thread       runningThread= null;
 
+    private static int          PORT   = 8080;
+    private static final int BACKLOG = 1;
+    private static final String SERVER_ADDRESS = "10.220.10.211";
+
     public ServerTest(int port){
-        this.serverPort = port;
+        PORT = port;
     }
 
     public void run(){
@@ -56,9 +61,11 @@ public class ServerTest implements Runnable{
 
     private void openServerSocket() {
         try {
-            this.serverSocket = new ServerSocket(this.serverPort);
+            InetAddress addr = InetAddress.getByName(ServerTest.SERVER_ADDRESS);
+            this.serverSocket = new ServerSocket(ServerTest.PORT, ServerTest.BACKLOG, addr);
         } catch (IOException e) {
-            throw new RuntimeException("Cannot open port 8080", e);
+            e.printStackTrace();
+            throw new RuntimeException("Cannot open port "+ServerTest.PORT, e);
         }
     }
 
@@ -67,7 +74,7 @@ public class ServerTest implements Runnable{
         ServerTest server = new ServerTest(12345);
         new Thread(server).start();
 
-
+        /*
         try {
             Thread.sleep(20 * 1000);
         } catch (InterruptedException e) {
@@ -75,6 +82,7 @@ public class ServerTest implements Runnable{
         }
         System.out.println("Stopping Server");
         server.stop();
+        */
 
     }
 
