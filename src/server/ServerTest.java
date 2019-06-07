@@ -14,7 +14,7 @@ public class ServerTest implements Runnable{
 
     private static int          PORT   = 8080;
     private static final int BACKLOG = 1;
-    private static final String SERVER_ADDRESS = "10.220.10.211";
+    private static final String SERVER_ADDRESS = "0.0.0.0";
 
     public ServerTest(int port){
         PORT = port;
