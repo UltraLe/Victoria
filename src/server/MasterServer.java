@@ -1,5 +1,7 @@
 package server;
 
+import entities.MateriaPlus;
+
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,10 +14,7 @@ public class MasterServer implements Runnable{
     private ServerSocket serverSocket = null;
     private boolean isStopped = false;
 
-    public static String materiaPlusJson = null;
-
-    //TODO campo che non serve, sara' compito dell'updater calcolarlo ed inserislo in materiaPlusJson
-    public static String emissionTime;
+    public static MateriaPlus materiaPlus;
 
     public static ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 

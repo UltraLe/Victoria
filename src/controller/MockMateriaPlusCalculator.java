@@ -6,7 +6,7 @@ public class MockMateriaPlusCalculator {
 
     public static MateriaPlus materiaCalculator()
     {
-        return new MateriaPlus("Analisi 1", 12, 31, 5, 120);
+        return new MateriaPlus("Analisi 1", 12, 31, 5);
     }
 
 }

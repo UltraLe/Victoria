@@ -6,6 +6,8 @@ public class MateriaPlus {
     private int credits;
     private int mark;
     private int rarity;
+    private String emissionTime;
+    private String requestedTime;
 
     public MateriaPlus(String subject, int credits, int mark, int rarity){
 
@@ -13,6 +15,7 @@ public class MateriaPlus {
         this.mark = mark;
         this.rarity = rarity;
         this.subject = subject;
+        this.requestedTime = requestedTime;
     }
 
     public void setMark(int mark){
@@ -31,6 +34,14 @@ public class MateriaPlus {
         this.rarity = rarity;
     }
 
+    public void setEmissionTime(String emissionTime) {
+        this.emissionTime = emissionTime;
+    }
+
+    public void setRequestedTime(String requestedTime) {
+        this.requestedTime = requestedTime;
+    }
+
     public String getSubject() {
         return subject;
     }
@@ -47,4 +58,16 @@ public class MateriaPlus {
         return rarity;
     }
 
+    public String getEmissionTime() {
+        return emissionTime;
+    }
+
+    public String getRequestedTime() {
+        return requestedTime;
+    }
+
+    @Override
+    public String toString(){
+        return subject+", "+credits+", "+mark+", "+rarity;
+    }
 }
