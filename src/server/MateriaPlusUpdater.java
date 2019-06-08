@@ -10,7 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 //Thread che deve essere lanciato all'avvio del master thread,
-//e che ogni 'UPDATE_AFTER_MINUTES' dovra' ''calcolare'' un nuovo voto
+//e che ogni 'UPDATE_AFTER_MINUTES' dovra' ''calcolare'' un nuovo vot
 public class MateriaPlusUpdater implements Runnable {
 
     private static final int UPDATE_AFTER_MINUTES = 1;
