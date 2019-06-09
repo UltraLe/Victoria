@@ -10,6 +10,10 @@ public class SlaveThreadServer implements Runnable {
 
     private Socket clientSocket = null;
 
+    private static final String LAUREA_ING_INFO = "ing_info";
+    private static final String LAUREA_ECO = "eco";
+    private static final String LAUREA_MED = "med";
+
     public SlaveThreadServer(Socket clientSocket){
         this.clientSocket = clientSocket;
     }
@@ -25,6 +29,8 @@ public class SlaveThreadServer implements Runnable {
 
         MateriaPlus materiaplus = MasterServer.materiaPlus;
         String requestedTime;
+
+        //TODO Gestire diverse lauree
 
         //InputStream non verrà usato, non voglio ricevere nulla dai client
         try {
@@ -51,6 +57,8 @@ public class SlaveThreadServer implements Runnable {
             MasterServer.readWriteLock.readLock().unlock();
 
             buff.close();
+
+            clientSocket.close();
 
         }catch (IOException e){
             e.printStackTrace();

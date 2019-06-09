@@ -1,73 +1,52 @@
 package entities;
 
-public class MateriaPlus {
+public class MateriaPlus extends Materia {
 
-    private String subject;
-    private int credits;
-    private int mark;
-    private int rarity;
     private String emissionTime;
     private String requestedTime;
 
     public MateriaPlus(String subject, int credits, int mark, int rarity){
-
-        this.credits = credits;
-        this.mark = mark;
-        this.rarity = rarity;
-        this.subject = subject;
-        this.requestedTime = requestedTime;
-    }
-
-    public void setMark(int mark){
-        this.mark=mark;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public void setCredits(int credits) {
-        this.credits = credits;
-    }
-
-    public void setRarity(int rarity) {
-        this.rarity = rarity;
-    }
-
-    public void setEmissionTime(String emissionTime) {
-        this.emissionTime = emissionTime;
-    }
-
-    public void setRequestedTime(String requestedTime) {
-        this.requestedTime = requestedTime;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public int getCredits() {
-        return credits;
-    }
-
-    public int getMark() {
-        return mark;
-    }
-
-    public int getRarity() {
-        return rarity;
-    }
-
-    public String getEmissionTime() {
-        return emissionTime;
+        super(subject, credits, mark, rarity);
     }
 
     public String getRequestedTime() {
         return requestedTime;
     }
 
+    public String getEmissionTime() {
+        return emissionTime;
+    }
+
+    public void setRequestedTime(String requestedTime) {
+        this.requestedTime = requestedTime;
+    }
+
+    public void setEmissionTime(String emissionTime) {
+        this.emissionTime = emissionTime;
+    }
+
+    //TODO rinorare differenza tra emission-time e time-left
+    public String nlapsedTimeCalculator(){
+        String[] em = emissionTime.split(":");
+        String[] re = requestedTime.split(":");
+
+        String timeLeft;
+
+        int hh, mm, ss;
+
+        hh = Integer.parseInt(re[0])-Integer.parseInt(em[0]);
+        mm = Integer.parseInt(re[1])-Integer.parseInt(em[1]);
+        ss = Integer.parseInt(re[2])-Integer.parseInt(em[2]);
+
+        timeLeft = hh+":"+mm+":"+ss;
+
+        return timeLeft;
+    }
+
     @Override
     public String toString(){
-        return subject+", "+credits+", "+mark+", "+rarity;
+        return getSubject()+", "+getCredits()+", "+getMark()+", "
+                +getRarity()+", "+getLat()+", "+getLng()
+                +", "+getEmissionTime();
     }
 }
