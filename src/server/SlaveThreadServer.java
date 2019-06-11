@@ -21,6 +21,7 @@ public class SlaveThreadServer implements Runnable {
 
         //read lock, in tal modo il writer non potrebbe aggiornare
         //mentre uno degli slave sta leggendo
+
         MasterServer.readWriteLock.readLock().lock();
         this.materiePlus = MasterServer.materiePlus;
         //read unlock
@@ -45,12 +46,14 @@ public class SlaveThreadServer implements Runnable {
         MateriaPlus requestedMateriaPlus;
 
         try {
-            outputSocket = clientSocket.getOutputStream();
             inputSocket = clientSocket.getInputStream();
             buffRead = new BufferedReader(new InputStreamReader(inputSocket));
 
             //leggo dal client il tipo di laurea della materia che sta richiedendo
             laurea = buffRead.readLine();
+
+            outputSocket = clientSocket.getOutputStream();
+            buffWrite = new BufferedWriter(new OutputStreamWriter(outputSocket));
 
             System.out.println("Client has sent:" +laurea);
 
@@ -68,6 +71,7 @@ public class SlaveThreadServer implements Runnable {
                 return;
             }
 
+
             // ottengo il tempo in cui il client ha richiesto la materia
             // uso metodo statico del timer
             requestedTime = MateriaPlusUpdater.getCurrentTimeUsingCalendar();
@@ -79,9 +83,10 @@ public class SlaveThreadServer implements Runnable {
             materiaplusJson = gson.toJson(requestedMateriaPlus);
 
             //ritorno la materia
-            buffWrite = new BufferedWriter(new OutputStreamWriter(outputSocket));
 
             buffWrite.write(materiaplusJson);
+
+            buffWrite.close();
 
             clientSocket.close();
 
