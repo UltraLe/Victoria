@@ -14,12 +14,12 @@ public class MasterServer implements Runnable{
     private ServerSocket serverSocket = null;
     private boolean isStopped = false;
 
-    public static MateriaPlus materiaPlus;
+    public static MateriaPlus[] materiePlus;
 
     public static ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
-    private static int          PORT   = 8080;
-    private static final int BACKLOG = 1;
+    private static int PORT = 8080;
+    private static final int BACKLOG = 10;
     private static final String SERVER_ADDRESS = "0.0.0.0";
 
     public MasterServer(int port){
