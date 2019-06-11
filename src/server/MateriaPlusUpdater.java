@@ -18,7 +18,7 @@ public class MateriaPlusUpdater implements Runnable {
     //valore di default del tempo di vita e' di 1h, in caso il server andasse giù
     //dovrà essere riavviato il tutto con un tempo di vita coerente al tempo
     //pasasto mentri il server si è riavviato
-    private static int MATERIA_TIME_TO_LIVE_MINUTES = 1;
+    private static int MATERIA_TIME_TO_LIVE_MINUTES = 5;
 
     private static final String recoverFile = "LastMateriePlus.jon";
 
@@ -63,7 +63,7 @@ public class MateriaPlusUpdater implements Runnable {
 
                 //Se tale differenza è minore di zero, il server è andato giu e posso ancora
                 //emettere le vecchie materia con il tempo rimanente
-                if (difference < 0) {
+                if (difference >= 0) {
                     //aggiorna le materie solo se nessun altro client le sta leggendo
                     MasterServer.readWriteLock.writeLock().lock();
                     MasterServer.materiePlus = materie;
@@ -74,6 +74,7 @@ public class MateriaPlusUpdater implements Runnable {
                         System.out.println("Json Materia recovered:\n" + materia.toString());
 
                     //fatto tutto, si mette in attesa per tanto tempo quanto rimane alle materie
+                    System.out.println("Difference: "+difference);
                     Thread.sleep(Math.abs(difference));
 
                 }
@@ -155,6 +156,8 @@ public class MateriaPlusUpdater implements Runnable {
             date1 = date1.substring(0, date1.length()-2) +"00";
             minusDate2 = minusDate2.substring(0, minusDate2.length()-2) +"00";
 
+            System.out.println(date1+"-"+minusDate2);
+
             Date d1 = dateFormat.parse(date1);
             Date d2 = dateFormat.parse(minusDate2);
 
@@ -178,7 +181,18 @@ public class MateriaPlusUpdater implements Runnable {
         int hh = (Integer.parseInt(parsed[0])+h)%24;
         int mm = (Integer.parseInt(parsed[1])+m)%60;
 
-        return hh+":"+mm+":"+parsed[2];
+        String sh = "";
+        String sm = "";
+
+        sh += hh;
+        sm += mm;
+
+        if(hh < 10)
+            sh = "0"+hh;
+        if(mm < 10)
+            sm = "0"+mm;
+
+        return sh+":"+sm+":"+parsed[2];
 
     }
 }
