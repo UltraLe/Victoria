@@ -41,7 +41,7 @@ public class FileManager {
                 break;
 
             case LAUREA_MED:
-                filePath = FILES_PATH + File.separator + LAUREA_MED;
+                filePath = FILES_PATH + File.separator + MED_FILENAME;
                 break;
         }
 
