@@ -63,7 +63,13 @@ public class MateriaPlusUpdater implements Runnable {
 
                 //Se tale differenza è minore di zero, il server è andato giu e posso ancora
                 //emettere le vecchie materia con il tempo rimanente
-                if (difference >= 0) {
+
+                //la differenza massima ammessa è del tempo di vita della materia,
+                //se è maggiore, significa che sono passato all'ora del giorno successivo,
+                //per esempio: emissionTime = 20:40:00, actualTime = 11:00:00, la loro differenza è maggiore di 0,
+                //ma si è passati al giorno successivo
+
+                if (difference < MATERIA_TIME_TO_LIVE_MINUTES*60*1000 && difference > 0) {
                     //aggiorna le materie solo se nessun altro client le sta leggendo
                     MasterServer.readWriteLock.writeLock().lock();
                     MasterServer.materiePlus = materie;
