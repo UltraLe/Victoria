@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
-import entities.Materia;
+import entities.MateriaPlus;
 
 public class FileManager {
 
     private static final String FILES_PATH = "src" + File.separator +"FileEsami";
 
-    private static final String ING_INFO_FILENAME = "inginfo.csv";
+    private static final String ING_INFO_FILENAME = "ingInfo.csv";
     private static final String ECO_FILENAME = "economia.csv";
     private static final String MED_FILENAME = "medicina.csv";
     private static final String POS_FILENAME = "posizioni.csv";
@@ -26,7 +26,7 @@ public class FileManager {
     public static final String LAUREA_MED = "med";
 
     //funzion eper prelevare una materia random da un file - !! MaxCrediti è un limite INCLUSIVO !!
-    public static Materia getRandomMateria(String indirizzo, String daEscludere, int maxCrediti) {
+    public static MateriaPlus getRandomMateria(String indirizzo, String daEscludere, int maxCrediti) {
 
         String filePath = "";
 
@@ -87,15 +87,15 @@ public class FileManager {
 
         int randPos = rand.nextInt(materieVector.size());
 
-        return  new Materia(materieVector.get(randPos), creditiVector.get(randPos));
+        return  new MateriaPlus(materieVector.get(randPos), creditiVector.get(randPos));
     }
 
     //Utility
-    public static Materia getRandomMateria(String indirizzo, String daEscludere) {
+    public static MateriaPlus getRandomMateria(String indirizzo, String daEscludere) {
         return getRandomMateria(indirizzo,daEscludere,100);
     }
 
-    public static Materia getRandomMateria(String indirizzo) {
+    public static MateriaPlus getRandomMateria(String indirizzo) {
         return getRandomMateria(indirizzo,"-1",100);
     }
 
