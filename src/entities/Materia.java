@@ -27,6 +27,12 @@ public class Materia {
         capture = 0;
     }
 
+    public Materia(String subject, int credits){
+        this.subject = subject;
+        this.credits = credits;
+        capture = 0;
+    }
+
     public int getCapture() {
         return capture;
     }
