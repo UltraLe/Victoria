@@ -6,7 +6,6 @@ public class Materia {
     private int credits;
     private int mark;
     private int rarity;
-    private int capture;
 
     private Double lat;
     private Double lng;
@@ -24,17 +23,11 @@ public class Materia {
         this.credits = credits;
         this.mark = mark;
         this.rarity = rarity;
-        capture = 0;
     }
 
     public Materia(String subject, int credits){
         this.subject = subject;
         this.credits = credits;
-        capture = 0;
-    }
-
-    public int getCapture() {
-        return capture;
     }
 
     public void setLat(Double lat) {
@@ -43,10 +36,6 @@ public class Materia {
 
     public void setLng(Double lng) {
         this.lng = lng;
-    }
-
-    public void setCapture(int capture) {
-        this.capture = capture;
     }
 
     public void setMark(int mark){
