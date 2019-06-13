@@ -14,21 +14,17 @@ public class MainMateriaPlusCalculator {
     public static final int LAUREE = 3;
 
     //Questi sono i controlli per evitare ripetizioni nel breve tempo
-    public static Hashtable ultimaMateria;
+    public static  Hashtable<String,String> ultimaMateria= new Hashtable<String, String>(LAUREE){{put(LAUREA_ING_INFO,"a");put(LAUREA_ECO,"b");put(LAUREA_MED,"c");}};
     public static Double[] lastLatAndLng= new Double[]{0.0,0.0};
+
 
     private MateriaPlus[] materie;
     private SlaveMateriaPlusCalculator slave;
     private String[] nomeLauree;
 
     public MainMateriaPlusCalculator() {
-        ultimaMateria=new Hashtable(LAUREE){};
-        ultimaMateria.put(LAUREA_ING_INFO,"pecora");
-        ultimaMateria.put(LAUREA_ECO,"pecorone");
-        ultimaMateria.put(LAUREA_MED,"pecoretta");
-
-        materie=new MateriaPlus[LAUREE];
-        slave=new SlaveMateriaPlusCalculator();
+        materie = new MateriaPlus[LAUREE];
+        slave = new SlaveMateriaPlusCalculator();
         nomeLauree= new String[]{LAUREA_ING_INFO,LAUREA_ECO,LAUREA_MED};
 
     }
@@ -82,6 +78,8 @@ public class MainMateriaPlusCalculator {
         return materie;
 
     }
+
+    /**Per un futuro diventerebbe più efficiente passare ad un HashTable se gli indirizzi di laurea aumentano*/
     public Hashtable hashMateriePlus(){
         Hashtable<String,MateriaPlus> materiaHash= new Hashtable<String, MateriaPlus>(3){};
         MateriaPlus[] materione= returnMateriePlus();
