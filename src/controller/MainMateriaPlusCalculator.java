@@ -33,7 +33,8 @@ public class MainMateriaPlusCalculator {
 
     }
 
-    public MateriaPlus[] returnMateriePlus() {
+    //giova, rinominato da returnMateriePlus a getMateriePlus, non offenderti
+    public MateriaPlus[] getMateriePlus() {
         int parameter=1;
         int rarity;
         int indexFor=0;
@@ -84,7 +85,7 @@ public class MainMateriaPlusCalculator {
     }
     public Hashtable hashMateriePlus(){
         Hashtable<String,MateriaPlus> materiaHash= new Hashtable<String, MateriaPlus>(3){};
-        MateriaPlus[] materione= returnMateriePlus();
+        MateriaPlus[] materione= getMateriePlus();
         materiaHash.put(LAUREA_ING_INFO,materione[0]);
         materiaHash.put(LAUREA_ECO,materione[1]);
         materiaHash.put(LAUREA_MED,materione[2]);
@@ -95,7 +96,7 @@ public class MainMateriaPlusCalculator {
         Hashtable<String,MateriaPlus> testHash;
         MateriaPlus[] testMateria;
         MainMateriaPlusCalculator testone= new MainMateriaPlusCalculator();
-        testMateria=testone.returnMateriePlus();
+        testMateria=testone.getMateriePlus();
         System.out.println("TEST CON ARRAY:");
         System.out.println(testMateria[0].getSubject()+"-Rarity-"+
                             Integer.toString(testMateria[0].getRarity())+"-Voto-"+

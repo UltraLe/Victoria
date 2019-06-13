@@ -20,6 +20,7 @@ public class MateriaPlus extends Materia {
     public MateriaPlus(String subject, int credits, int mark, int rarity){
         super(subject, credits, mark, rarity);
     }
+
     public MateriaPlus(String subject, int credits){
         super(subject, credits);
     }

@@ -1,6 +1,7 @@
 package server;
 
 import com.google.gson.Gson;
+import controller.MainMateriaPlusCalculator;
 import controller.MockMateriaPlusCalculator;
 import entities.MateriaPlus;
 
@@ -38,9 +39,6 @@ public class MateriaPlusUpdater implements Runnable {
         String emissionPlusTTL;
         String actualTime;
         long difference;
-
-        //TODO gestire ripristino in caso il server fosse andato giù (con file di supporto)
-        //TODO ... in cui memorizzare il vettore di materie salvato in forma Json
 
         try{
 
@@ -94,7 +92,8 @@ public class MateriaPlusUpdater implements Runnable {
             //si è gia ripristinato
             while(true) {
 
-                materie = MockMateriaPlusCalculator.materiaCalculator();
+                //TODO se avanza tempo implementare MainMateriePlusCalculator come singleton
+                materie = (new MainMateriaPlusCalculator()).getMateriePlus();
 
                 //setto il rempo di emissione alle materie
                 emissionTime = getCurrentTimeUsingCalendar();

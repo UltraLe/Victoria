@@ -33,8 +33,9 @@ public class SlaveThreadServer implements Runnable {
 
         OutputStream outputSocket;
         InputStream inputSocket;
-        BufferedWriter buffWrite;
-        BufferedReader buffRead;
+
+        DataOutputStream dataWrite;
+        DataInputStream dataRead;
 
         String laurea;
 
@@ -47,13 +48,13 @@ public class SlaveThreadServer implements Runnable {
 
         try {
             inputSocket = clientSocket.getInputStream();
-            buffRead = new BufferedReader(new InputStreamReader(inputSocket));
+            dataRead = new DataInputStream(inputSocket);
 
             //leggo dal client il tipo di laurea della materia che sta richiedendo
-            laurea = buffRead.readLine();
+            laurea = dataRead.readUTF();
 
             outputSocket = clientSocket.getOutputStream();
-            buffWrite = new BufferedWriter(new OutputStreamWriter(outputSocket));
+            dataWrite = new DataOutputStream(outputSocket);
 
             System.out.println("Client has sent:" +laurea);
 
@@ -83,12 +84,13 @@ public class SlaveThreadServer implements Runnable {
             materiaplusJson = gson.toJson(requestedMateriaPlus);
 
             //ritorno la materia
+            dataWrite.writeUTF(materiaplusJson);
+            dataWrite.flush();
 
-            buffWrite.write(materiaplusJson);
-
-            buffWrite.close();
-
+            dataWrite.close();
             clientSocket.close();
+
+            System.out.println("Materia sent: "+materiaplusJson+" by: "+Thread.currentThread().getName());
 
         }catch (IOException e){
             e.printStackTrace();
