@@ -90,9 +90,7 @@ public class MateriaPlusUpdater implements Runnable {
             //ramo eseguito in caso il server non fosse andato giù o
             //si è gia ripristinato
             while(true) {
-
-                //TODO se avanza tempo implementare MainMateriePlusCalculator come singleton
-                materie = (new MainMateriaPlusCalculator()).getMateriePlus();
+                materie = MainMateriaPlusCalculator.getInstance().getMateriePlus();
 
                 //setto il rempo di emissione alle materie
                 emissionTime = getCurrentTimeUsingCalendar();

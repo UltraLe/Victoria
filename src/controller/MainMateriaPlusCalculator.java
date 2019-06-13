@@ -17,16 +17,25 @@ public class MainMateriaPlusCalculator {
     public static  Hashtable<String,String> ultimaMateria= new Hashtable<String, String>(LAUREE){{put(LAUREA_ING_INFO,"a");put(LAUREA_ECO,"b");put(LAUREA_MED,"c");}};
     public static Double[] lastLatAndLng= new Double[]{0.0,0.0};
 
+    private static MainMateriaPlusCalculator instance = null;
 
     private MateriaPlus[] materie;
     private SlaveMateriaPlusCalculator slave;
     private String[] nomeLauree;
 
-    public MainMateriaPlusCalculator() {
+    private MainMateriaPlusCalculator() {
         materie = new MateriaPlus[LAUREE];
         slave = new SlaveMateriaPlusCalculator();
         nomeLauree= new String[]{LAUREA_ING_INFO,LAUREA_ECO,LAUREA_MED};
 
+    }
+
+    public static MainMateriaPlusCalculator getInstance(){
+        if(instance == null){
+            instance = new MainMateriaPlusCalculator();
+        }
+
+        return instance;
     }
 
     //giova, rinominato da returnMateriePlus a getMateriePlus, non offenderti
