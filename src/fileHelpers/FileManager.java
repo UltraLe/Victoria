@@ -116,6 +116,7 @@ public class FileManager {
                 String currLine = reader.readLine();
                 if (!currLine.equals(daEscludere))
                     posVector.add(currLine);
+
             }
 
         } catch (FileNotFoundException e) {

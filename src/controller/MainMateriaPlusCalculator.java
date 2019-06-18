@@ -38,7 +38,7 @@ public class MainMateriaPlusCalculator {
         return instance;
     }
 
-    //giova, rinominato da returnMateriePlus a getMateriePlus, non offenderti
+
     public MateriaPlus[] getMateriePlus() {
         int parameter=1;
         int rarity;

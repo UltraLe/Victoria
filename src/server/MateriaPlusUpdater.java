@@ -18,7 +18,7 @@ public class MateriaPlusUpdater implements Runnable {
     //valore di default del tempo di vita e' di 1h, in caso il server andasse giù
     //dovrà essere riavviato il tutto con un tempo di vita coerente al tempo
     //pasasto mentri il server si è riavviato
-    private static int MATERIA_TIME_TO_LIVE_MINUTES = 5;
+    private static int MATERIA_TIME_TO_LIVE_MINUTES = 2;
 
     private static final String recoverFile = "LastMateriePlus.jon";
 
